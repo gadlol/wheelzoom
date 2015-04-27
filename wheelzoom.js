@@ -11,7 +11,7 @@ window.wheelzoom = (function(){
 
 	function setSrcToBackground(img) {
 		img.style.backgroundImage = "url('"+img.src+"')";
-		img.style.backgroundRepeat = 'no-repeat';
+		img.style.backgroundRepeat = 'repeat-x';
 		canvas.width = img.naturalWidth;
 		canvas.height = img.naturalHeight;
 		img.src = canvas.toDataURL();
@@ -33,7 +33,7 @@ window.wheelzoom = (function(){
 			if (bgPosX > 0) {
 				bgPosX = 0;
 			} else if (bgPosX < width - bgWidth) {
-				bgPosX = width - bgWidth;
+			//	bgPosX = width - bgWidth;
 			}
 
 			if (bgPosY > 0) {
@@ -49,7 +49,8 @@ window.wheelzoom = (function(){
 		function reset() {
 			bgWidth = width;
 			bgHeight = height;
-			bgPosX = bgPosY = 0;
+			//bgPosX = bgPosY = 0;
+			bgPosY = 0;
 			updateBgStyle();
 		}
 
@@ -102,7 +103,8 @@ window.wheelzoom = (function(){
 
 		function drag(e) {
 			e.preventDefault();
-			bgPosX += (e.pageX - previousEvent.pageX);
+			if(bgPosX<=0 ) bgPosX += (e.pageX - previousEvent.pageX);
+			else bgPosX += (e.pageX - previousEvent.pageX);
 			bgPosY += (e.pageY - previousEvent.pageY);
 			previousEvent = e;
 			updateBgStyle();
